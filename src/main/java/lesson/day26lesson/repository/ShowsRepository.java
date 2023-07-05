@@ -14,6 +14,7 @@ public class ShowsRepository {
     
     public static final String FIELD_NAME = "name";
     public static final String COLLECTION_TVSHOWS = "tvshow";
+    public static final String FIELD_GENRES = "genres";
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -31,6 +32,26 @@ public class ShowsRepository {
         // perform the query (use org.bson Document)
         List<Document> result = mongoTemplate.find(query,Document.class, COLLECTION_TVSHOWS);
         
+        return result;
+
+    }
+
+    // db.tvshow.find({
+    //     genres: {$in: ['Horror']}
+    // })
+    public List<String> findShowsByGenre(Object... genreList){
+        // set filter
+        Criteria criteria = Criteria.where(FIELD_GENRES).in(genreList);
+
+        //create query
+        Query query = Query.query(criteria);
+        query.fields()
+            .exclude("_id")
+            .include(FIELD_NAME);
+
+        // perform query (String.class because only returning one value = NAME)
+        List<String> result = mongoTemplate.find(query, String.class, COLLECTION_TVSHOWS);
+
         return result;
 
     }

@@ -22,20 +22,24 @@ public class Day26lessonApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception{
-		List<Document> docs = showRepo.findShowsByName("Bitten");
-		for (Document d : docs){
-			String name = d.getString("name");
-			String type = d.getString("type");
-			Integer runtime = d.getInteger("runtime");
-			System.out.printf("name: %s\ntype: %s\nruntime: %d\n", name, type, runtime);
-			
-			List<String> genres = d.getList("genres", String.class);
-			System.out.printf("\tgenres: %s\n", genres);
-
-			Double averageRating = d.get("rating",Document.class).getDouble("average");
-			System.out.printf("\taverage rating: %.2f\n", averageRating);
-			
+		for (String r : showRepo.findShowsByGenre("Anime","Horror")){
+			System.out.println(r);
 		}
+		
+		// List<Document> docs = showRepo.findShowsByName("Bitten");
+		// for (Document d : docs){
+		// 	String name = d.getString("name");
+		// 	String type = d.getString("type");
+		// 	Integer runtime = d.getInteger("runtime");
+		// 	System.out.printf("name: %s\ntype: %s\nruntime: %d\n", name, type, runtime);
+			
+		// 	List<String> genres = d.getList("genres", String.class);
+		// 	System.out.printf("\tgenres: %s\n", genres);
+
+		// 	Double averageRating = d.get("rating",Document.class).getDouble("average");
+		// 	System.out.printf("\taverage rating: %.2f\n", averageRating);
+			
+		// }
 	} 
 
 }
