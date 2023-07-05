@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Show details</h1>
+    <br>
+    <a href="/">Return to search</a>
+    <ul data-th-each="show : ${showList}">
+        <li>
+            ID: <span data-th-text="${show.id}"></span><br>
+            Name: <span data-th-text="${show.name}"></span><br>  
+            Language: <span data-th-text="${show.language}"></span><br>  
+            Runtime: <span data-th-text="${show.runtime}"></span><br>
+            Average rating: <span data-th-text="${show.averageRating} ?: 'N/A'"></span><br>
+        </li>
+    </ul>
+</body>
+</html>

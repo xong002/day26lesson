@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+</head>
+<body>
+    <h1>Enter Show Name</h1>
+    <form action="#" data-th-object="${show}" method="get" data-th-action="@{/search}">
+        <input type="text" data-th-field="*{name}">
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>
