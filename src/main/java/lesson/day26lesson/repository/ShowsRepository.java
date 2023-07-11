@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -13,8 +15,9 @@ import org.springframework.stereotype.Repository;
 public class ShowsRepository {
     
     public static final String FIELD_NAME = "name";
-    public static final String COLLECTION_TVSHOWS = "tvshow";
+    public static final String COLLECTION_TVSHOWS = "tvshows";
     public static final String FIELD_GENRES = "genres";
+    public static final String A_TYPE = "type";
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -53,6 +56,27 @@ public class ShowsRepository {
         List<String> result = mongoTemplate.find(query, String.class, COLLECTION_TVSHOWS);
 
         return result;
+
+    }
+
+    public List<String> getAllTypes(){
+       List<String> result = mongoTemplate.findDistinct(new Query(), "type", COLLECTION_TVSHOWS, String.class);
+       return result; 
+    }
+
+    // db.tvshows.find(
+    // { type: {$regex: 'reality', $options: 'i'}}
+    // )
+    // .limit(5)
+    // .sort({name: 1})
+    // .projection({ id: 1, name: 1, summary: 1, 'image.original': 1, _id: 0})
+    public List<Document> getShowsByType(String type, int limit, int skip){
+        Criteria criteria = Criteria.where("type").regex(type, "i");
+
+        Query query = Query.query(criteria).limit(limit).skip(skip).with(Sort.by(Direction.ASC, "name"));
+        query.fields().exclude("_id").include("id", "name", "summary", "image.original");
+
+        return mongoTemplate.find(query, Document.class, COLLECTION_TVSHOWS);
 
     }
 }
