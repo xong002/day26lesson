@@ -38,6 +38,9 @@ public class Day26lessonApplication implements CommandLineRunner {
 		// 	System.out.println(d);
 		// }
 
+		List<String> allTypes = showRepo.getAllTypes();
+		System.out.println(allTypes.get(0));
+
 		// for (String r : showRepo.findShowsByGenre("Anime", "Horror")) {
 		// 	System.out.println(r);
 		// }

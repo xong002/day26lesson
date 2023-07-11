@@ -60,7 +60,7 @@ public class ShowsRepository {
     }
 
     public List<String> getAllTypes(){
-       List<String> result = mongoTemplate.findDistinct(new Query(), "type", COLLECTION_TVSHOWS, String.class);
+       List<String> result = mongoTemplate.findDistinct(new Query(), "type", "tvshows", String.class);
        return result; 
     }
 
